@@ -1,0 +1,107 @@
+.nav{
+	background-color: #4A5152;
+	width: 100%;
+	height: 80px;
+	
+}
+#topNav{
+	border-bottom: 2px solid #393B3C
+}
+#bottomNav{
+	border-top: 2px solid #393B3C
+}
+
+.vcenter {
+     display: flex;
+     align-items: center;
+}
+.button{
+	display: inline-block;
+    padding: 7px 26px;
+    margin-right: 20px;
+    color: #FFF;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    opacity: 0.7;
+    cursor: pointer;
+    width: 250px
+}
+.buttons{
+	width: 100%
+}
+.button:hover{
+	opacity: 0.9
+}
+
+.green{
+	background-color:#5768E2; 
+}
+.orange{
+	background-color: #4FA05D
+}
+.heading{
+	color: #FFFFFF;
+	font-size: 25px;
+	width: 100%;
+	margin: 20px;
+}
+
+.logged{
+	color: #FFFFFF;
+	
+	   
+}
+.myPosts{
+	cursor: pointer;
+}
+.welcome{
+	font-size: 20px;
+}
+.bold{
+	font-weight: bold;
+}
+.login:hover{
+	color: #ACBCC3
+}
+
+#backgroundCar{
+	width: 100%;
+}
+#layer{
+	position: absolute;
+    top: 0px;
+    left: 0px;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    width: 100%;
+    height: 100%;
+    background: url(../images/gray.png);
+    background-repeat: repeat;
+}
+#slide{
+	position: relative;
+	width: 100%;
+}
+
+.trip{
+	font-size: 40px;
+	margin-bottom: 20px;
+}
+
+.list{
+	margin: 50px 0;
+	width: 100%;
+
+}
+.listItem{
+	width: 80%;
+	border: 1px solid #B8BAC3;
+	height: 100px;
+	border-left: 3px solid #B8BAC3;
+	margin:20px;
+}
+

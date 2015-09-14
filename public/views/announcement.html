@@ -1,0 +1,31 @@
+ <form class="form-horizontal" name="myForm" novalidate>
+    <inputs type = "text" text = "From where do you go?" var  = "from">
+	</inputs>
+    <inputs type = "text" text = "Where do you go?" var = "to"></inputs>
+    <div class="form-group" ng-click = "openCalendar($event)">
+    	<label class='col-md-offset-3 col-md-2 control-label'>Date</label>
+    	<div class = "col-md-3">
+	    	<input  type="text" class="form-control" show-button-bar ="false" \
+			datepicker-popup="MM-dd-yyyy" min-date = "today" name= "date" ng-model="date"  
+			is-open="calendar" placeholder = "mm-dd-yyyy" required>
+		</div>
+		<span class = 'col-md-2' style='color:red' 
+		       ng-show='myForm.date.$dirty && myForm.date.$invalid'>
+		<span ng-show='myForm.date.$error.required'>Required!</span></span>
+	</div>
+	<inputs type = "text" text = "Model of Car" var  = "carModel">
+	</inputs>
+	<inputs type = "number" text = "Amount of seats" var  = "seatAmount">
+	</inputs>
+	<inputs type = "number" text = "Price $" var  = "price">
+	</inputs>
+
+
+  <div class="form-group">
+    <div class="col-md-offset-6 col-md-2 submit">
+      <button ng-disabled="!myForm.from.$valid || !myForm.to.$valid || !myForm.date.$valid
+      || !myForm.price.$valid || !myForm.carModel.$valid || !myForm.seatAmount.$valid" 
+      type="submit" ng-click = "submit()" class="btn btn-default">Post</button>
+    </div>
+  </div>
+</form>
