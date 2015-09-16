@@ -3,7 +3,7 @@
   "version"      : "0.0.0",
   "description"  : "Simple todo application.",
   "main"         : "server.js",
-  "author"       : "Scotch",
+  "author"       : "Artyom",
   "dependencies" : {
     "express"         : "^4.10.6",
     "mysql"           : "^2.5.4",

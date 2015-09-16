@@ -1,44 +1,62 @@
 var connectionProvider = require('./models/connectionProvider');
-
+var url = require('url');
 
 
 module.exports = function(app) {
 
-	// api ---------------------------------------------------------------------
-	// get all todos
+	
 	app.get('/home', function(req, res) {
-/*		var connection = connectionProvider.connectionProvider.getMysqlConnection();
-		connection.query("INSERT INTO users (LastName) VALUES ('Cardina')",function(e,result){
-	connection.query("INSERT INTO users (LastName) VALUES ("+result.insertId+")",function(e,r,f){
-	console.log(result)
-	console.log(r)
-})
+		var url_parts = url.parse(req.url, true),
+			query = url_parts.query,
+			connection = connectionProvider.connectionProvider.getMysqlConnection();
 
-connection.end()
+		if (query.id =="false")
+			connection.query("SELECT a.From_City ,a.To_City,a.Date,a.privacy,\
+				a.Time, a.Creation_Date,a.Places,a.Price, c.Brand, c.Model,ad.address,\
+				us.LastName,us.FirstName,us.Mail\
+				FROM announcements a INNER JOIN cars c ON a.Car_Id=c.Car_Id AND a.Privacy ='public'\
+				INNER JOIN addresses ad ON ad.Address_Id = a.Address_Id\
+				INNER JOIN users us ON us.User_Id = a.User_Id ",function(e,r){
+					var time;
+				for(var i = 0;i<r.length;i++){
+					time = new Date(r[i].Time);
+					r[i].Time = time.getMinutes()<10 ?time.getHours() + ":" +time.getMinutes() +"0" : time.getHours() + ":" +time.getMinutes();
+				}
+				res.json(r)
+				connection.end()
+			})
+/*		else connection.query("SELECT * FROM announcements WHERE ")
+*/		
+
 
         
-});*/
 	})
 
-	app.get('/announcement', function(req, res) {
+	app.post('/announcement', function(req, res) {
 		var connection = connectionProvider.connectionProvider.getMysqlConnection();
-		connection.query("SELECT * FROM users",function(e,r,f){
-	console.log(r)
-})
-
-
-        
+		var id = parseInt(req.body.userId); 
+		connection.query("INSERT INTO cars (Brand,Model) VALUES('" + req.body.carBrand+"','"+req.body.carModel+"')"
+			,function(e,carResult){
+				connection.query("INSERT INTO addresses (ADDRESS) VALUES('" + req.body.address+"')"
+					,function(e,addressResult){
+						connection.query("INSERT INTO announcements (User_Id,From_City,To_City,Date,Time,Creation_Date,Places,Price,Privacy,Car_Id,Address_Id)\
+							VALUES("+id+",'"+req.body.from+"','"+req.body.to+"','"+req.body.date+"','"+req.body.myTime+"','"+
+								new Date()+"',"+req.body.seatAmount +","+req.body.price+",'"+req.body.privacy+"',"+
+								+carResult.insertId+ "," +addressResult.insertId +")"
+							,function(e,r,f){
+								res.end();
+							})
+					})
+			})
 	});
 
-	// create todo and send back all todos after creation
 	app.post('/home', function(req, res) {
 		var connection = connectionProvider.connectionProvider.getMysqlConnection();
-		connection.query("INSERT INTO countries (country) VALUES('"+ 
-			req.body.location.name.split(',')[2].trim()+"') ON DUPLICATE KEY UPDATE country=country, country_Id=LAST_INSERT_ID(country_Id)"
-		,function(err,countryResult){
-			connection.query("INSERT INTO cities (city,country_Id) VALUES('"+ 
-			req.body.location.name.split(',')[1].trim()+"','"+countryResult.insertId+"') ON DUPLICATE KEY UPDATE city=city, city_Id=LAST_INSERT_ID(city_Id)"
+		
+			connection.query("INSERT INTO cities (city) VALUES('"+ 
+			req.body.location.name.split(',')[0].trim()+"') ON DUPLICATE KEY UPDATE City_Id=LAST_INSERT_ID(City_Id)"
 				,function(err,cityResult){
+					console.log(cityResult)
 					connection.query(
 					"INSERT INTO users (LastName,FirstName,Gender,Age,Mail,FBId,City_Id) VALUES('"+ 
 					req.body.last_name+
@@ -49,29 +67,14 @@ connection.end()
 					"','"+req.body.id+
 					"',"+cityResult.insertId+
 					")\
-					ON DUPLICATE KEY UPDATE FBId=FBId",function(err,user){
-					 	console.log(user)
+					ON DUPLICATE KEY UPDATE User_Id=LAST_INSERT_ID(User_Id)",function(err,result){
+					 	res.end(result.insertId.toString())
 					})
 		        })
-		})
-
-
 	});
 
-	// delete a todo
-	app.delete('/api/todos/:todo_id', function(req, res) {
-		Todo.remove({
-			_id : req.params.todo_id
-		}, function(err, todo) {
-			if (err)
-				res.send(err);
-
-			getTodos(res);
-		});
-	});
-	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
-		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+		res.sendfile('./public/index.html'); 
 	});
 
 };

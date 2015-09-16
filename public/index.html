@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>Node/Angular Cars App</title>
-
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<script src="bower_components/angular/angular.js"></script>
   	<script src="bower_components/angular-route/angular-route.js"></script>
   	<script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -37,21 +37,26 @@
 	<script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
-  <div class = "nav container-fluid vcenter"  id = "topNav">
-    <div class = "container">
-      <div class = "center-text logged" ng-show ="loginStatus">
-        <div class ="col-md-2 myPosts" ng-click="navigateToMyPosts()">My Posts</div>
-        <div class = "welcome col-md-offset-2 col-md-4" >Welcome to our website {{user.first_name}}!
+  <div class = "nav container-fluid"  id = "topNav">
+      <div class = "row">
+        <div class="col-md-1 home logged" ng-click = "toHome()">Home</div>
+        <div class = "center-text logged" ng-show ="showLogin">
+          <div class = "col-md-offset-3 welcome  col-md-5" >Before posting please Log In
+          </div>
+        </div>
+        <div class = "center-text logged" ng-show ="loginStatus">
+          <div class ="col-md-2 myPosts" ng-click="navigateToMyPosts()">My Posts</div>
+          <div class = "welcome col-md-offset-2 col-md-4" >Welcome to our website {{user.first_name}}!
+          </div>
+        </div>
+        <div ng-class = "{ 'col-md-offset-2 col-md-2': !loginStatus || !showLogin, 'col-md-offset-0 col-md-2': loginStatus || showLogin}" class = "pull-right">
+           <fb:login-button  ng-hide ="loginStatus" scope="public_profile,email,user_location,user_hometown,user_friends"
+          size="medium"></fb:login-button>
+          <fb:login-button  ng-show ="loginStatus"  autologoutlink="true" scope="public_profile,email,user_location"
+          size="medium"></fb:login-button>
         </div>
       </div>
-      <div ng-class = "{ 'col-md-offset-10 col-md-2': !loginStatus, 'col-md-offset-2 col-md-2': loginStatus }">
-         <fb:login-button  ng-hide ="loginStatus" scope="public_profile,email,user_location,user_friends"
-        size="medium"></fb:login-button>
-        <fb:login-button  ng-show ="loginStatus"  autologoutlink="true" scope="public_profile,email,user_location"
-        size="medium"></fb:login-button>
-      </div>
 
-    </div>
 
     
     

@@ -5,7 +5,8 @@
 	
 }
 #topNav{
-	border-bottom: 2px solid #393B3C
+	border-bottom: 2px solid #393B3C;
+	padding: 2%;
 }
 #bottomNav{
 	border-top: 2px solid #393B3C
@@ -52,8 +53,25 @@
 
 .logged{
 	color: #FFFFFF;
-	
-	   
+}
+inputs input[type=text].ng-valid.ng-dirty{
+	border: 1px solid green !important;
+}
+.date input[type=text].ng-valid{
+	border: 1px solid green !important;
+}
+
+input[type=number].ng-valid{
+	border: 1px solid green !important;
+}
+inputs input[type=text].ng-invalid.ng-dirty{
+	border: 1px solid red !important;
+}
+.date input[type=text].ng-invalid.ng-dirty{
+	border: 1px solid red !important;
+}
+input[type=number].ng-invalid.ng-dirty{
+	border: 1px solid red !important;
 }
 .myPosts{
 	cursor: pointer;
@@ -100,8 +118,19 @@
 .listItem{
 	width: 80%;
 	border: 1px solid #B8BAC3;
-	height: 100px;
+	height: auto;
 	border-left: 3px solid #B8BAC3;
 	margin:20px;
+	padding: 15px;
 }
 
+.city{
+	font-weight: bold;
+}
+.info{
+	margin-bottom: 10px;
+}
+.home{
+	cursor: pointer;
+
+}

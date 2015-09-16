@@ -1,8 +1,7 @@
 angular.module('facebookService', [])
 
-  // super simple service
-  // each function returns a promise object 
-  .service("facebookService",function($rootScope,facebookFriends,Users){
+  
+  .service("facebookService",function($rootScope,$location,$http,facebookFriends,userService){
     
     this.watchLoginChange = function() {
 
@@ -12,10 +11,7 @@ angular.module('facebookService', [])
 
     if (res.status === 'connected') {
       
-      /* 
-       The user is already logged, 
-       is possible retrieve his personal info
-      */
+      
       
       
 
@@ -23,12 +19,6 @@ angular.module('facebookService', [])
 
 
 
-      /*
-       This is also the point where you should create a 
-       session for the current user.
-       For this purpose you can use the data inside the 
-       res.authResponse object.
-      */
 
     } 
     else {
@@ -47,12 +37,23 @@ angular.module('facebookService', [])
     FB.api('/me', {fields: 'gender, first_name, last_name, email,location,age_range'},function(response) {
             console.log(response);
             $rootScope.user = _self.user = response;
+            if ($rootScope.showLogin){
+                $location.path('/announcement');
+                $rootScope.showLogin = false;
+            } 
             $rootScope.loginStatus= true;
        $rootScope.$digest();
-       Users.create(response);
+       userService.create(response).success(function(res){
+        $rootScope.user.tableId = res;
+        var requestString = "?id=" + res + "&fbId=" + $rootScope.user.id
+        userService.get(requestString).success(function(){
+
+  })
+       });
 
 
     });
+     
     facebookFriends.getFriends().then(function(response){
       $rootScope.friends = response
       console.log(response)

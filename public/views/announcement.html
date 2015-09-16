@@ -2,30 +2,61 @@
     <inputs type = "text" text = "From where do you go?" var  = "from">
 	</inputs>
     <inputs type = "text" text = "Where do you go?" var = "to"></inputs>
-    <div class="form-group" ng-click = "openCalendar($event)">
+    <div class="form-group vcenter date" ng-click = "openCalendar($event)">
     	<label class='col-md-offset-3 col-md-2 control-label'>Date</label>
     	<div class = "col-md-3">
 	    	<input  type="text" class="form-control" show-button-bar ="false" \
-			datepicker-popup="MM-dd-yyyy" min-date = "today" name= "date" ng-model="date"  
+			datepicker-popup="MM-dd-yyyy" min-date = "today" name= "date" ng-model="formData.date"  
 			is-open="calendar" placeholder = "mm-dd-yyyy" required>
 		</div>
-		<span class = 'col-md-2' style='color:red' 
-		       ng-show='myForm.date.$dirty && myForm.date.$invalid'>
-		<span ng-show='myForm.date.$error.required'>Required!</span></span>
 	</div>
+	<inputs type = "text" text = "Brand of Car" var  = "carBrand">
+	</inputs>
 	<inputs type = "text" text = "Model of Car" var  = "carModel">
 	</inputs>
 	<inputs type = "number" text = "Amount of seats" var  = "seatAmount">
 	</inputs>
 	<inputs type = "number" text = "Price $" var  = "price">
 	</inputs>
+	<inputs type = "text" text = "Address" var  = "address">
+	</inputs>
+	<div class = "vcenter">
+	  <label class='col-md-offset-3 col-md-2 control-label'>Time</label>
+	  <timepicker class = "col-md-offset-1 col-md-1"ng-model="formData.myTime" hour-step="1" minute-step="30" show-meridian="false"></timepicker>
+	  <span class = 'col-md-2' style='color:red' 
+		       ng-show=' myForm.myTime.$invalid'>
+		<span ng-show='myForm.myTime.$error.required'>Required!</span></span>
+	</div>
+	<div>
+		<label class='col-md-offset-3 col-md-2 control-label'>Who can see your post?</label>
+		<form class="form-inline">
+  			<div class="checkbox" >
+			    <label  class = " col-md-offset-0 col-md-1 vcenter">
+			      <input  type="radio" name = "privacy" ng-model = "formData.privacy" value = "public"> Anyone
+			    </label>
+			    <label  class = " ol-md-offset-0  col-md-2 vcenter">
+			      <input  type="radio" name = "privacy"ng-model = "formData.privacy"  value = "private">My Friends
+			    </label>
+			</div>
+  		</form>
+	</div>
+	<div class = "vcenter">
+	  <label class='col-md-offset-4 col-md-1 control-label'>Description</label>
+	  <textarea ng-model = "formData.description"class = "col-md-3" rows="4" cols="50"></textarea>
+	</div>
 
 
   <div class="form-group">
-    <div class="col-md-offset-6 col-md-2 submit">
-      <button ng-disabled="!myForm.from.$valid || !myForm.to.$valid || !myForm.date.$valid
-      || !myForm.price.$valid || !myForm.carModel.$valid || !myForm.seatAmount.$valid" 
-      type="submit" ng-click = "submit()" class="btn btn-default">Post</button>
+    <div class="col-md-offset-6 col-md-2 submit" ng-show = "!loading">
+      <button ng-disabled="!formData.myTime || !myForm.from.$valid || !myForm.to.$valid || !myForm.date.$valid
+      || !myForm.price.$valid || !myForm.carModel.$valid || !myForm.address.$valid || !myForm.seatAmount.$valid" 
+      type="submit" ng-click = "post()" class="btn btn-default">Post</button>
     </div>
   </div>
+  
 </form>
+<div class = "conteiner-fluid">
+	<p class="text-center" ng-show="loading">
+	<span class="fa fa-spinner fa-spin fa-3x"></span>
+  </p>
+</div>
